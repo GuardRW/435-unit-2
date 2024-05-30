@@ -1,0 +1,61 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>The Game of Life</title>
+  
+    <script type="text/javascript" src="./assetmanager.js"></script>
+    <script type="text/javascript" src="./timer.js"></script>
+    <script type="text/javascript" src="./gameengine.js"></script>
+    <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+    <script type="text/javascript" src="./Automata.js"></script>
+    <script type="text/javascript" src="./plant.js"></script>
+</head>
+<body>
+    <h1>Evolving Colors</h1>
+    <canvas id="gameWorld" width="1024" height="768" ></canvas>
+    <div>
+        <div id="ticks">Ticks: 0</div>
+        <p>Tick Rate:</p>
+        <input type="range" id="speed" min="1" max="120" value="120" step="1">
+    </div>
+    <div>
+        <div id="plants">Plants Added: 0</div>
+        <p>Add how many plants?</p>
+        <input type="range" id="numplant" min="1" max="20" value="1" step="1">
+    </div>
+    <div>
+        <div id="animats">Animats Added: 0</div>
+        <p>Add how many animats?</p>
+        <input type="range" id="numanimat" min="1" max="20" value="1" step="1">
+    </div>
+    <script>
+        const gameworld = document.getElementById("gameWorld");
+        const ctx = gameworld.getContext('2d');
+
+        const resolution = 5;
+        const COLS = Math.floor(gameworld.width / resolution);
+        const ROWS = Math.floor(gameworld.height / resolution);
+        const it = new Automata(COLS, ROWS);
+
+        const addPlantButton = document.createElement('button');
+        addPlantButton.innerText = 'Add Plants';
+        addPlantButton.onclick = () => {
+           it.addPlant(parseInt(document.getElementById("numplant").value, 10))
+           document.getElementById('plants').innerHTML = "Plants Added: " + it.numPlants;
+        }
+
+        const addAnimatButton = document.createElement('button');
+        addAnimatButton.innerText = 'Add Animats';
+        addAnimatButton.onclick = () => {
+           it.addAnimat(parseInt(document.getElementById("numanimat").value, 10))
+           document.getElementById('animats').innerHTML = "Animats Added: " + it.numAnimats;
+        }
+
+        document.body.appendChild(addPlantButton);
+        document.body.appendChild(addAnimatButton);
+    </script>
+</body>
+</html>
